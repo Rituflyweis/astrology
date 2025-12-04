@@ -25,7 +25,7 @@ function JoinUsSection() {
 
   return (
     <section className="bg-white py-12">
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         <div className="max-w-2xl">
           {/* Title */}
           <h2 className="text-4xl font-bold text-[#481299] mb-8 text-left">

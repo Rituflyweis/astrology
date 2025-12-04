@@ -1,13 +1,113 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import pandit1 from "../../assets/pandit1.png";
 import pandit2 from "../../assets/pandit2.png";
 import pandit3 from "../../assets/pandit3.png";
 
+// Mock messages for each chat
+const CHAT_MESSAGES = {
+  1: [
+    {
+      type: "sender",
+      name: "Aria",
+      avatar: pandit1,
+      text: "Hello! I'm Aria, your astrologer. How can I assist you today?",
+    },
+    {
+      type: "user",
+      text: "Hi Aria, I'm curious about my career prospects for the next year. Can you provide some insights based on my birth chart?",
+    },
+    {
+      type: "sender",
+      name: "Aria",
+      avatar: pandit1,
+      text: "Of course! To give you the most accurate reading, I'll need your birth date, time, and location. Once I have that, I can analyze your chart and discuss your career prospects.",
+    },
+    {
+      type: "user",
+      text: "My birth date is July 15, 1998, at 3:30 PM in San Francisco, CA.",
+    },
+    {
+      type: "sender",
+      name: "Aria",
+      avatar: pandit1,
+      text: "Thank you! Let me take a look at your chart. Based on your birth chart, it appears you have a strong alignment in your career houses, suggesting significant opportunities for growth and advancement in the coming year. There's also a positive focus on leadership, meaning that communication and networking will be key to building strong professional relationships.",
+    },
+  ],
+  2: [
+    {
+      type: "sender",
+      name: "Dr. Maya",
+      avatar: pandit2,
+      text: "Namaste! I'm Dr. Maya, your Ayurveda consultant. How can I help you with your health and wellness today?",
+    },
+    {
+      type: "user",
+      text: "Hello Dr. Maya, I've been experiencing digestive issues lately. Can you suggest some Ayurvedic remedies?",
+    },
+    {
+      type: "sender",
+      name: "Dr. Maya",
+      avatar: pandit2,
+      text: "I'd be happy to help! To provide the best recommendations, could you tell me more about your symptoms and daily routine?",
+    },
+    {
+      type: "user",
+      text: "I have bloating and discomfort after meals, especially in the evening. I usually eat around 7 PM.",
+    },
+    {
+      type: "sender",
+      name: "Dr. Maya",
+      avatar: pandit2,
+      text: "Based on Ayurvedic principles, eating late in the evening can disrupt your digestive fire (Agni). I recommend having your main meal before 6 PM and including warm, easily digestible foods. Would you like me to suggest a specific diet plan?",
+    },
+  ],
+  3: [
+    {
+      type: "sender",
+      name: "Sarah",
+      avatar: pandit3,
+      text: "Welcome! I'm Sarah, a Vedic astrologer. What would you like to know about your cosmic journey?",
+    },
+    {
+      type: "user",
+      text: "Hi Sarah, I'm interested in learning about my relationship compatibility. Can you help?",
+    },
+    {
+      type: "sender",
+      name: "Sarah",
+      avatar: pandit3,
+      text: "Absolutely! Relationship compatibility is one of my specialties. I'll need both birth charts to provide a detailed analysis. Do you have your partner's birth details?",
+    },
+    {
+      type: "user",
+      text: "Yes, I have both our birth details. My date is March 20, 1995, and my partner's is August 10, 1997.",
+    },
+    {
+      type: "sender",
+      name: "Sarah",
+      avatar: pandit3,
+      text: "Perfect! Based on Vedic astrology principles, I can see there's a strong compatibility between your charts. Your signs complement each other well, suggesting harmony in communication and shared values. Would you like a detailed compatibility report?",
+    },
+  ],
+};
+
+const CHATS = [
+  { id: 1, name: "Aria", role: "Astrologer · 2h", avatar: pandit1 },
+  { id: 2, name: "Dr. Maya", role: "Ayurveda Doctor · 1d", avatar: pandit2 },
+  { id: 3, name: "Sarah", role: "Vedic Astrologer · 3d", avatar: pandit3 },
+];
+
 function ChatPage() {
   const navigate = useNavigate();
+  const [selectedChatId, setSelectedChatId] = useState(1);
+  
+  const selectedChat = CHATS.find((chat) => chat.id === selectedChatId) || CHATS[0];
+  const messages = CHAT_MESSAGES[selectedChatId] || CHAT_MESSAGES[1];
+
   return (
     <section className="py-10 min-h-screen bg-gradient-to-b from-[#F4F2FF] via-white to-[#E9F4FF]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1200px] mx-auto px-3 sm:px-4">
         <div className="bg-white rounded-3xl shadow-[0_24px_60px_rgba(15,23,42,0.12)] overflow-hidden flex min-h-[600px]">
           {/* Chats sidebar */}
           <aside className="w-64 border-r border-slate-100 bg-slate-50 flex flex-col">
@@ -16,15 +116,12 @@ function ChatPage() {
             </div>
 
             <div className="flex-1 overflow-y-auto">
-              {[
-                { id: 1, name: "Aria", role: "Astrologer · 2h", avatar: pandit1 },
-                { id: 2, name: "Dr. Maya", role: "Ayurveda Doctor · 1d", avatar: pandit2 },
-                { id: 3, name: "Sarah", role: "Vedic Astrologer · 3d", avatar: pandit3 },
-              ].map((c, idx) => (
+              {CHATS.map((c) => (
                 <button
                   key={c.id}
+                  onClick={() => setSelectedChatId(c.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-left text-xs ${
-                    idx === 0
+                    selectedChatId === c.id
                       ? "bg-white shadow-[0_12px_24px_rgba(15,23,42,0.08)]"
                       : "hover:bg-slate-100"
                   } transition`}
@@ -50,7 +147,7 @@ function ChatPage() {
               <div className="space-y-0.5">
                 <p className="text-xs text-slate-500">Live Chat with</p>
                 <p className="text-base font-semibold text-slate-900">
-                  Astrologer
+                  {selectedChat.name}
                 </p>
               </div>
               <button
@@ -64,100 +161,40 @@ function ChatPage() {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6 text-xs">
-              {/* Astrologer message 1 */}
-              <div className="flex items-start gap-3 max-w-md">
-                <img
-                  src={pandit1}
-                  alt="Aria"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <div className="space-y-1">
-                  <p className="text-[11px] text-slate-500">Aria</p>
-                  <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
-                    <p className="text-xs text-slate-700">
-                      Hello! I&apos;m Aria, your astrologer. How can I assist you
-                      today?
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* User message 1 */}
-              <div className="flex justify-end">
-                <div className="flex items-end gap-3 max-w-md">
-                  <div className="rounded-2xl bg-[#4f46e5] px-4 py-3 text-white shadow-md">
-                    <p className="text-xs">
-                      Hi Aria, I&apos;m curious about my career prospects for the
-                      next year. Can you provide some insights based on my birth
-                      chart?
-                    </p>
-                  </div>
-                  <img
-                    src={pandit3}
-                    alt="User"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Astrologer message 2 */}
-              <div className="flex items-start gap-3 max-w-md">
-                <img
-                  src={pandit1}
-                  alt="Aria"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <div className="space-y-1">
-                  <p className="text-[11px] text-slate-500">Aria</p>
-                  <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
-                    <p className="text-xs text-slate-700">
-                      Of course! To give you the most accurate reading, I&apos;ll
-                      need your birth date, time, and location. Once I have that,
-                      I can analyze your chart and discuss your career prospects.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* User message 2 */}
-              <div className="flex justify-end">
-                <div className="flex items-end gap-3 max-w-md">
-                  <div className="rounded-2xl bg-[#4f46e5] px-4 py-3 text-white shadow-md">
-                    <p className="text-xs">
-                      My birth date is July 15, 1998, at 3:30 PM in San
-                      Francisco, CA.
-                    </p>
-                  </div>
-                  <img
-                    src={pandit3}
-                    alt="User"
-                    className="w-8 h-8 rounded-full object-cover"
-                  />
-                </div>
-              </div>
-
-              {/* Astrologer long message */}
-              <div className="flex items-start gap-3 max-w-md">
-                <img
-                  src={pandit1}
-                  alt="Aria"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <div className="space-y-1">
-                  <p className="text-[11px] text-slate-500">Aria</p>
-                  <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
-                    <p className="text-xs text-slate-700">
-                      Thank you! Let me take a look at your chart. Based on your
-                      birth chart, it appears you have a strong alignment in your
-                      career houses, suggesting significant opportunities for
-                      growth and advancement in the coming year. There&apos;s
-                      also a positive focus on leadership, meaning that
-                      communication and networking will be key to building strong
-                      professional relationships.
-                    </p>
-                  </div>
-                </div>
-              </div>
+              {messages.map((message, index) => {
+                if (message.type === "sender") {
+                  return (
+                    <div key={index} className="flex items-start gap-3 max-w-md">
+                      <img
+                        src={message.avatar}
+                        alt={message.name}
+                        className="w-8 h-8 rounded-full object-cover"
+                      />
+                      <div className="space-y-1">
+                        <p className="text-[11px] text-slate-500">{message.name}</p>
+                        <div className="rounded-2xl bg-white px-4 py-3 shadow-sm">
+                          <p className="text-xs text-slate-700">{message.text}</p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div key={index} className="flex justify-end">
+                      <div className="flex items-end gap-3 max-w-md">
+                        <div className="rounded-2xl bg-[#4f46e5] px-4 py-3 text-white shadow-md">
+                          <p className="text-xs">{message.text}</p>
+                        </div>
+                        <img
+                          src={pandit3}
+                          alt="User"
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  );
+                }
+              })}
             </div>
 
             {/* Input area */}

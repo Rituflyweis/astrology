@@ -1,7 +1,7 @@
 function QuizBanner() {
   return (
     <div className="bg-white py-6">
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         <div className="bg-gradient-to-r from-[#481299] to-purple-500 rounded-lg border-2 border-sky-300 p-6">
           <div className="flex items-center justify-between gap-8 flex-wrap">
             {/* Left Side Text */}

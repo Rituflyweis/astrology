@@ -1,44 +1,31 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import Header from './features/Header';
-import HomePage from './pages/HomePage';
 import Footer from './features/Footer';
-import LoginPage from './pages/auth/LoginPage';
-import ChatPage from './pages/chat/ChatPage';
-import ContactPage from './pages/contact/ContactPage';
+import AppRoutes from './routes/AppRoutes';
 import './App.css';
 
-function App() {
-  // Start with the auth welcome screen open by default
-  const [authMode, setAuthMode] = useState('welcome'); // null | 'welcome' | 'signup' | 'signin' | 'pro-signup' | 'onboarding'
-  const isAuthOpen = authMode !== null;
-
-  const closeAuth = () => setAuthMode(null);
+function AppContent() {
+  const location = useLocation();
+  const isAuthRoute =
+    location.pathname === '/' ||
+    location.pathname === '/signin' ||
+    location.pathname === '/signup' ||
+    location.pathname === '/signup/professional' ||
+    location.pathname === '/onboarding';
 
   return (
-    <Router>
-      <div>
-        {!isAuthOpen && <Header onLoginClick={() => setAuthMode('welcome')} />}
+    <div>
+      {!isAuthRoute && <Header />}
+      <AppRoutes />
+      {!isAuthRoute && <Footer />}
+    </div>
+  );
+}
 
-        {isAuthOpen ? (
-          // Full-page auth experience as default route
-          <LoginPage
-            mode={authMode}
-            setMode={setAuthMode}
-            onClose={closeAuth}
-          />
-        ) : (
-          <>
-            <Routes>
-              <Route path="/" element={<Navigate to="/home" replace />} />
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/chat" element={<ChatPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-            </Routes>
-            <Footer />
-          </>
-        )}
-      </div>
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }

@@ -24,7 +24,7 @@ function ExpertsSection() {
 
   return (
     <section className="bg-white py-12">
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         
         {/* Header */}
         <div className="flex items-center justify-between mb-8">

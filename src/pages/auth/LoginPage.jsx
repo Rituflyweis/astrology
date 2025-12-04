@@ -1,16 +1,46 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import AuthWelcome from "../../features/auth/AuthWelcome";
 import SignupForm from "../../features/auth/SignupForm";
 import ProSignupForm from "../../features/auth/ProSignupForm";
 import SigninForm from "../../features/auth/SigninForm";
 import OnboardingFlow from "../../features/auth/OnboardingFlow";
 
-function LoginPage({ mode, onClose, setMode }) {
+function LoginPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [mode, setMode] = useState("welcome");
+
+  // Sync mode with URL path
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setMode("welcome");
+    } else if (location.pathname === "/signin") {
+      setMode("signin");
+    } else if (location.pathname === "/signup") {
+      setMode("signup");
+    } else if (location.pathname === "/signup/professional") {
+      setMode("pro-signup");
+    } else if (location.pathname === "/onboarding") {
+      setMode("onboarding");
+    }
+  }, [location.pathname]);
+
+  const goHome = () => {
+    navigate("/home", { replace: true });
+  };
+
+  const goTo = (nextMode, path) => {
+    setMode(nextMode);
+    navigate(path, { replace: true });
+  };
+
   if (mode === "signup") {
     return (
       <SignupForm
-        onBack={() => setMode("welcome")}
-        onClose={onClose}
-        onSwitchToSignin={() => setMode("signin")}
+        onBack={() => goTo("welcome", "/")}
+        onClose={goHome}
+        onSwitchToSignin={() => goTo("signin", "/signin")}
       />
     );
   }
@@ -18,9 +48,9 @@ function LoginPage({ mode, onClose, setMode }) {
   if (mode === "pro-signup") {
     return (
       <ProSignupForm
-        onBack={() => setMode("welcome")}
-        onClose={onClose}
-        onSwitchToSignin={() => setMode("signin")}
+        onBack={() => goTo("welcome", "/")}
+        onClose={goHome}
+        onSwitchToSignin={() => goTo("signin", "/signin")}
       />
     );
   }
@@ -28,10 +58,10 @@ function LoginPage({ mode, onClose, setMode }) {
   if (mode === "signin") {
     return (
       <SigninForm
-        onBack={() => setMode("welcome")}
-        onClose={onClose}
-        onSwitchToSignup={() => setMode("signup")}
-        onSuccess={() => setMode("onboarding")}
+        onBack={() => goTo("welcome", "/")}
+        onClose={goHome}
+        onSwitchToSignup={() => goTo("signup", "/signup")}
+        onSuccess={() => goTo("onboarding", "/onboarding")}
       />
     );
   }
@@ -39,8 +69,8 @@ function LoginPage({ mode, onClose, setMode }) {
   if (mode === "onboarding") {
     return (
       <OnboardingFlow
-        onClose={onClose}
-        onDone={() => setMode(null)}
+        onClose={goHome}
+        onDone={goHome}
       />
     );
   }
@@ -48,10 +78,10 @@ function LoginPage({ mode, onClose, setMode }) {
   // default welcome
   return (
     <AuthWelcome
-      onClose={onClose}
-      onSignup={() => setMode("signup")}
-      onSignin={() => setMode("signin")}
-      onProSignup={() => setMode("pro-signup")}
+      onClose={goHome}
+      onSignup={() => goTo("signup", "/signup")}
+      onSignin={() => goTo("signin", "/signin")}
+      onProSignup={() => goTo("pro-signup", "/signup/professional")}
     />
   );
 }

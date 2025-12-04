@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import astrologersImage from '../../assets/astrologers.png';
 import ayurvedaImage from '../../assets/ayurveda.png';
 import yogaImage from '../../assets/yoga.png';
@@ -53,11 +54,8 @@ function ServicesSection() {
             const iconColor = service.iconColor.replace('#', '%23');
             const iconUrl = `https://api.iconify.design/${service.iconName}.svg?color=${iconColor}&width=20&height=20`;
             
-            return (
-              <div
-                key={service.id}
-                className="flex flex-col items-center text-center"
-              >
+            const content = (
+              <>
                 {/* Circular Icon Container */}
                 <div className={`w-32 h-32 rounded-full bg-gradient-to-b ${service.gradient} flex items-center justify-center mb-6 shadow-lg overflow-hidden`}>
                   <img
@@ -83,6 +81,39 @@ function ServicesSection() {
                 <p className="text-[#481299] text-base leading-relaxed max-w-sm">
                   {service.description}
                 </p>
+              </>
+            );
+
+            if (service.id === 2) {
+              return (
+                <Link
+                  key={service.id}
+                  to="/ayurvedha"
+                  className="flex flex-col items-center text-center cursor-pointer"
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            if (service.id === 3) {
+              return (
+                <Link
+                  key={service.id}
+                  to="/services/yoga"
+                  className="flex flex-col items-center text-center cursor-pointer"
+                >
+                  {content}
+                </Link>
+              );
+            }
+
+            return (
+              <div
+                key={service.id}
+                className="flex flex-col items-center text-center"
+              >
+                {content}
               </div>
             );
           })}

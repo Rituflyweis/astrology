@@ -19,7 +19,7 @@ const zodiacSigns = [
 function HoroscopeSection() {
   return (
     <section className="bg-white pt-4 pb-8">
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         {/* Separator Line */}
         <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-sky-300 to-transparent mb-6"></div>
         

@@ -26,7 +26,7 @@ function HeroSection() {
       </div>
 
       {/* Content Overlay */}
-      <div className="max-w-[1400px] mx-auto px-8 py-16 w-full relative z-20">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4 py-16 w-full relative z-20">
         {/* Content */}
         <div className="max-w-2xl text-white">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">

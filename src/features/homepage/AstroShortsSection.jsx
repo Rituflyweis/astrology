@@ -28,7 +28,7 @@ function AstroShortsSection() {
   return (
     <section className="py-16 bg-gradient-to-b from-[#F4F2FF] via-white to-[#E9F4FF]">
       {/* Outer container aligned with previous section */}
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>

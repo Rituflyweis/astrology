@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer 
       className="bg-gradient-to-r from-[#0C4292] to-[#481299] text-white py-12"
     >
       
-      <div className="max-w-[1400px] mx-auto px-12">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: Logo and Description */}
           <div>
@@ -58,12 +60,12 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/90 hover:text-white transition-colors">
+                <a href="/privacy-policy" className="text-white/90 hover:text-white transition-colors">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/90 hover:text-white transition-colors">
+                <a href="/terms-conditions" className="text-white/90 hover:text-white transition-colors">
                   Terms & Condition
                 </a>
               </li>
@@ -111,9 +113,9 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-white/90 hover:text-white transition-colors">
+                <Link to="/services/vastu" className="text-white/90 hover:text-white transition-colors">
                   Vastu
-                </a>
+                </Link>
               </li>
               <li>
                 <a href="#" className="text-white/90 hover:text-white transition-colors">

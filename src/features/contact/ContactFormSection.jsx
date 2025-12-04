@@ -2,8 +2,8 @@ function ContactFormSection() {
   return (
     <section className="mb-12">
       <div className="space-y-8">
-        {/* Form (half width on larger screens, centered) */}
-        <div className="w-full md:w-1/2 mx-auto">
+        {/* Form (half width on larger screens, left aligned) */}
+        <div className="w-full md:w-1/2">
           <h2 className="text-lg sm:text-xl font-serif text-slate-900 mb-2">
             Contact Form
           </h2>
@@ -66,7 +66,7 @@ function ContactFormSection() {
               />
             </div>
 
-            <div className="pt-2 flex justify-center">
+            <div className="pt-2 flex justify-start">
               <button
                 type="submit"
                 className="px-8 h-10 rounded-full bg-gradient-to-r from-[#481299] to-[#0C4292] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-[0_16px_32px_rgba(79,70,229,0.5)] hover:translate-y-[-1px] hover:shadow-[0_20px_40px_rgba(79,70,229,0.65)] transition"

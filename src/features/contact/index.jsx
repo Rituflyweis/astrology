@@ -5,7 +5,7 @@ import ContactMap from "./ContactMap";
 function ContactPageContent() {
   return (
     <main className="py-10 bg-gradient-to-b from-[#F4F2FF] via-white to-[#E9F4FF]">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-8">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-4">
         <ContactHero />
         <ContactFormSection />
         <ContactMap />
@@ -15,5 +15,6 @@ function ContactPageContent() {
 }
 
 export default ContactPageContent;
+
 
 

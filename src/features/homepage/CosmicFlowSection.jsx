@@ -19,7 +19,7 @@ function CosmicFlowSection() {
       </div>
       
       {/* Content that scrolls over the background */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-12">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-3 sm:px-4">
         {/* About Cosmic Flow */}
         <div className="mb-12 text-white">
           <h2 className="text-[36px] font-serif font-normal mb-6">
